@@ -31,7 +31,7 @@ public class Main {
 					 + " ORDER BY countries.name ";
 			
 			try (PreparedStatement ps = con.prepareStatement(sql)) {
-				ps.setString(1, nationName);
+				ps.setString(1, "%"+nationName+"%");
 				try (ResultSet rs = ps.executeQuery()) {
 					while(rs.next()) {
 						final String name = rs.getString(1);
