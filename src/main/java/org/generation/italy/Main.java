@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Scanner;
 
 public class Main {
 	
@@ -12,6 +13,12 @@ public class Main {
 	private static final String PASSWORD = "root";
 	
 	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Inserire il nome della nazione da cercare: ");
+		String nationName = sc.next();
+		sc.close();
+		
 		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)){
 			
 			 String sql = "SELECT countries.name, countries.country_id, regions.name, continents.name"
@@ -20,6 +27,7 @@ public class Main {
 					 + " ON countries.region_id = regions.region_id "
 					 + " JOIN continents "
 					 + " ON regions.continent_id = continents.continent_id "
+					 + " WHERE countries.name LIKE '" + nationName + "'"
 					 + " ORDER BY countries.name ";
 			
 			try (PreparedStatement ps = con.prepareStatement(sql)) {
