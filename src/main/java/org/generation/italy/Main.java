@@ -27,10 +27,11 @@ public class Main {
 					 + " ON countries.region_id = regions.region_id "
 					 + " JOIN continents "
 					 + " ON regions.continent_id = continents.continent_id "
-					 + " WHERE countries.name LIKE '" + nationName + "'"
+					 + " WHERE countries.name LIKE ? "
 					 + " ORDER BY countries.name ";
 			
 			try (PreparedStatement ps = con.prepareStatement(sql)) {
+				ps.setString(1, nationName);
 				try (ResultSet rs = ps.executeQuery()) {
 					while(rs.next()) {
 						final String name = rs.getString(1);
